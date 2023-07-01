@@ -1,0 +1,4 @@
+{
+    "ext": "pug,js",
+    "watch": ["controllers", "views"]
+}

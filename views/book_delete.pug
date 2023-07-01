@@ -1,0 +1,44 @@
+extends layout 
+
+block content 
+    h1 #{title} : #{book.title}
+    hr
+    div(style="margin-top: 20px;")
+        p #[strong Author:] 
+            a(href=book.author.url) #{book.author.name} 
+        p #[strong Summary:] #{book.summary}
+        p #[strong ISBN:] #{book.isbn}
+        p #[strong Genre:] 
+            each g, index in book.genre 
+                a(href=g.url)  #{g.name}#{index != book.genre.length - 1 ? "," : ""}
+    hr
+
+    if bookinstance.length > 0
+            p(style="color: red; margin-top: 30px;") You cannot delete a book if an instance still exists, please delete before continuing.  
+                span(style="color: black;") (#{bookinstance.length})
+
+            div(style="margin: 40px 40px; display: flex; flex-direction: column; justify-items: center; gap: 20px;")
+                each instance in bookinstance
+                    div.instance 
+                        p #[strong ID:] 
+                            a(href=instance.url) #{instance.id}
+                        p #[strong Imprint:] #{instance.imprint}
+
+                        if instance.status=='Available'
+                            p #[strong Status]: 
+                                span.text-success #{instance.status}
+                        else if instance.status=='Maintenance'
+                            p #[strong Status]: 
+                                span.text-danger #{instance.status}
+                        else
+                            p #[strong Status]: 
+                                span.text-warning #{instance.status}
+    else 
+        p Are you sure you want to delete this book?
+
+        form(method="POST" action="")
+            div.form-group 
+                input#authorid.form-control(type='hidden',name='bookid', required='true', value=book.id)
+                button.btn.btn-primary(type='submit') Delete
+
+
