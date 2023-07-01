@@ -3,6 +3,7 @@ const Book = require("../models/book");
 
 const { body, validationResult } = require("express-validator");
 const asyncHandler = require("express-async-handler");
+const debug = require("debug")("author");
 
 // Display list of all Authors.
 exports.author_list = asyncHandler(async (req, res, next) => {
@@ -146,6 +147,7 @@ exports.author_update_get = asyncHandler(async (req, res, next) => {
 
   if (author === null) {
     res.redirect("catalog/authors")
+    debug(`id not found on update ${req.params.id}`)
   } else {
     res.render("author_form", {
       title: "Update Author", 
