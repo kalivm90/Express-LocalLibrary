@@ -75,7 +75,7 @@ app.use(function(err, req, res, next) {
 
 // DB
 const mongoDB = process.env.MONGODB_URI
-console.log(mongoDB)
+
 
 main().catch((err) => console.log(err));
 
